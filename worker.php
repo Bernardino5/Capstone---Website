@@ -56,9 +56,11 @@
             <input type="email" id="email" placeholder="Email" required>
             <input type="date" id="dateCreated" required>
             <input type="text" id="workerName" placeholder="Worker Name" required>
-            <input type="date of Birth" id="dateofBirth" placeholder="Date of Birth" required>
-            <input type="text" id="Contact" placeholder="ContactNo." required>
+            <input type="date" id="dateOfBirth" required>
+            <input type="text" id="contact" placeholder="Contact No." required>
+            <input type="text" id="gender" placeholder="Gender" required>
             <input type="text" id="helmetNo" placeholder="Helmet No." required>
+            <input type="text" id="location" placeholder="Location" required>
             <button type="submit" class="button">Register Worker</button>
             <button type="button" class="button" id="cancelButton">Cancel</button>
         </form>
@@ -70,7 +72,11 @@
                 <th>Email</th>
                 <th>Date Created</th>
                 <th>Worker Name</th>
+                <th>Date of Birth</th>
+                <th>Contact No.</th>
+                <th>Gender</th>
                 <th>Helmet No.</th>
+                <th>Location</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -79,37 +85,58 @@
                 <td>leysonvladimir@gmail.com</td>
                 <td>2024-10-01</td>
                 <td>Vladimir Leyson</td>
+                <td>1990-01-15</td>
+                <td>09889672320</td>
+                <td>Male</td>
                 <td>HD123</td>
+                <td>Site A</td>
                 <td><button onclick="removeWorker(this)">Remove</button></td>
             </tr>
             <tr>
                 <td>baniquedjonash@gmail.com</td>
                 <td>2024-10-02</td>
                 <td>Jonash Baniqued</td>
+                <td>1985-15-01</td>
+                <td>09763465870</td>
+                <td>Male</td>
                 <td>HS456</td>
+                <td>Site D</td>
                 <td><button onclick="removeWorker(this)">Remove</button></td>
             </tr>
             <tr>
                 <td>sorianoken@gmail.com</td>
                 <td>2024-10-03</td>
                 <td>Ken Soriano</td>
+                <td>1988-05-02</td>
+                <td>09658967290</td>
+                <td>Male</td>
                 <td>MJ789</td>
+                <td>Site D</td>
                 <td><button onclick="removeWorker(this)">Remove</button></td>
             </tr>
             <tr>
                 <td>rosalesdarwin@gmail.com</td>
                 <td>2024-10-04</td>
                 <td>Darwin Rosales</td>
+                <td>1976-23-10</td>
+                <td>09679082890</td>
+                <td>Male</td>
                 <td>LB101</td>
+                <td>Site B</td>
                 <td><button onclick="removeWorker(this)">Remove</button></td>
             </tr>
             <tr>
                 <td>delpilarjosh@gmail.com</td>
                 <td>2024-10-05</td>
                 <td>Josh Del pilar</td>
+                <td>1956-29-08</td>
+                <td>0966468380/td>
+                <td>Male</td>
                 <td>MT202</td>
+                <td>Site B</td>
                 <td><button onclick="removeWorker(this)">Remove</button></td>
             </tr>
+            <!-- Additional rows can go here -->
         </tbody>
     </table>
 
@@ -135,7 +162,11 @@
             const email = document.getElementById('email').value;
             const dateCreated = document.getElementById('dateCreated').value;
             const workerName = document.getElementById('workerName').value;
+            const dateOfBirth = document.getElementById('dateOfBirth').value;
+            const contact = document.getElementById('contact').value;
+            const gender = document.getElementById('gender').value;
             const helmetNo = document.getElementById('helmetNo').value;
+            const location = document.getElementById('location').value;
 
             // Create a new row
             const row = document.createElement('tr');
@@ -143,7 +174,11 @@
                 <td>${email}</td>
                 <td>${dateCreated}</td>
                 <td>${workerName}</td>
+                <td>${dateOfBirth}</td>
+                <td>${contact}</td>
+                <td>${gender}</td>
                 <td>${helmetNo}</td>
+                <td>${location}</td>
                 <td><button onclick="removeWorker(this)">Remove</button></td>
             `;
 
