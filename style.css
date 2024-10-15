@@ -1,0 +1,37 @@
+body {
+    padding: 50px;
+    background-color: #062A78; /* Example background color */
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0; /* Added to remove default body margin */
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 50px;
+    box-shadow: 0px 7px 29px 0px rgba(255, 3, 3, 0.2); /* Changed shadow property */
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.form-group {
+    margin-bottom: 30px;
+}
+.btn {
+    display: inline-block; /* Make button an inline-block element */
+    padding: 10px 20px; /* Padding for the button */
+    margin: 10px 0; /* Space around the button */
+    background: linear-gradient(45deg, #062A78, white); /* Gradient background */
+    color: white; /* Text color */
+    border: 2px solid white; /* Set white border color and width */
+    border-radius: 5px; /* Rounded corners */
+    text-decoration: none; /* Remove underline */
+    text-align: center; /* Center text in button */
+    font-weight: bold; /* Make the text bold */
+    cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.btn:hover {
+    background: white; /* Change background on hover */
+    color: #062A78; /* Change text color on hover */
+}
