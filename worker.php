@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Worker List</title>
+    <title>Construction Worker List</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -47,20 +47,20 @@
     </style>
 </head>
 <body>
-    <h1>Worker List</h1>
-    <button class="button" id="addRecordButton">Add Record</button>
+    <h1>Constrction Worker List</h1>
+    <button class="button" id="addRecordButton">Add Worker</button>
     <button class="button" onclick="window.location.href='index.php'">Go Back to Dashboard</button>
     
     <div class="form-container" id="workerFormContainer">
-        <form id="workerForm">
-            <input type="email" id="email" placeholder="Email" required>
-            <input type="date" id="dateCreated" required>
-            <input type="text" id="workerName" placeholder="Worker Name" required>
-            <input type="date" id="dateOfBirth" required>
-            <input type="text" id="contact" placeholder="Contact No." required>
-            <input type="text" id="gender" placeholder="Gender" required>
-            <input type="text" id="helmetNo" placeholder="Helmet No." required>
-            <input type="text" id="location" placeholder="Location" required>
+        <form id="workerForm" method="POST">
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <input type="date" id="dateCreated" name="dateCreated" required>
+            <input type="text" id="workerName" name="workerName" placeholder="Worker Name" required>
+            <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+            <input type="text" id="contact" name="contact" placeholder="Contact No." required>
+            <input type="text" id="gender" name="gender" placeholder="Gender" required>
+            <input type="text" id="helmetNo" name="helmetNo" placeholder="Helmet No." required>
+            <input type="text" id="location" name="location" placeholder="Location" required>
             <button type="submit" class="button">Register Worker</button>
             <button type="button" class="button" id="cancelButton">Cancel</button>
         </form>
@@ -81,62 +81,76 @@
             </tr>
         </thead>
         <tbody id="workerTableBody">
-            <tr>
-                <td>leysonvladimir@gmail.com</td>
-                <td>2024-10-01</td>
-                <td>Vladimir Leyson</td>
-                <td>1990-01-15</td>
-                <td>09889672320</td>
-                <td>Male</td>
-                <td>HD123</td>
-                <td>Site A</td>
-                <td><button onclick="removeWorker(this)">Remove</button></td>
-            </tr>
-            <tr>
-                <td>baniquedjonash@gmail.com</td>
-                <td>2024-10-02</td>
-                <td>Jonash Baniqued</td>
-                <td>1985-15-01</td>
-                <td>09763465870</td>
-                <td>Male</td>
-                <td>HS456</td>
-                <td>Site D</td>
-                <td><button onclick="removeWorker(this)">Remove</button></td>
-            </tr>
-            <tr>
-                <td>sorianoken@gmail.com</td>
-                <td>2024-10-03</td>
-                <td>Ken Soriano</td>
-                <td>1988-05-02</td>
-                <td>09658967290</td>
-                <td>Male</td>
-                <td>MJ789</td>
-                <td>Site D</td>
-                <td><button onclick="removeWorker(this)">Remove</button></td>
-            </tr>
-            <tr>
-                <td>rosalesdarwin@gmail.com</td>
-                <td>2024-10-04</td>
-                <td>Darwin Rosales</td>
-                <td>1976-23-10</td>
-                <td>09679082890</td>
-                <td>Male</td>
-                <td>LB101</td>
-                <td>Site B</td>
-                <td><button onclick="removeWorker(this)">Remove</button></td>
-            </tr>
-            <tr>
-                <td>delpilarjosh@gmail.com</td>
-                <td>2024-10-05</td>
-                <td>Josh Del pilar</td>
-                <td>1956-29-08</td>
-                <td>0966468380/td>
-                <td>Male</td>
-                <td>MT202</td>
-                <td>Site B</td>
-                <td><button onclick="removeWorker(this)">Remove</button></td>
-            </tr>
-            <!-- Additional rows can go here -->
+        <?php
+$servername = "localhost"; // or your server
+$username = "root"; // your DB username
+$password = ""; // your DB password
+$dbname = "worker_management";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Handle form submission
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $email = $_POST['email'];
+    $dateCreated = $_POST['dateCreated'];
+    $workerName = $_POST['workerName'];
+    $dateOfBirth = $_POST['dateOfBirth'];
+    $contact = $_POST['contact'];
+    $gender = $_POST['gender'];
+    $helmetNo = $_POST['helmetNo'];
+    $location = $_POST['location'];
+
+    $sql = "INSERT INTO worker_list (email, date_created, worker_name, date_of_birth, contact_no, gender, helmet_no, location) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssssssss", $email, $dateCreated, $workerName, $dateOfBirth, $contact, $gender, $helmetNo, $location);
+
+    if ($stmt->execute()) {
+        echo "<script>alert('New worker added successfully.');</script>";
+    } else {
+        echo "<script>alert('Error: " . $stmt->error . "');</script>";
+    }
+
+    $stmt->close();
+}
+
+// Retrieve and display workers
+$sql = "SELECT worker_id, email, date_created, worker_name, date_of_birth, contact_no, gender, helmet_no, location FROM worker_list";
+$result = $conn->query($sql);
+
+// Check if the query was successful before accessing the result
+if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>
+                <td>{$row['email']}</td>
+                <td>{$row['date_created']}</td>
+                <td>{$row['worker_name']}</td>
+                <td>{$row['date_of_birth']}</td>
+                <td>{$row['contact_no']}</td>
+                <td>{$row['gender']}</td>
+                <td>{$row['helmet_no']}</td>
+                <td>{$row['location']}</td>
+                <td><button onclick=\"removeWorker({$row['worker_id']})\">Remove</button></td>
+            </tr>";
+    }
+} else {
+    // If the query failed or there are no workers
+    if ($result === false) {
+        echo "<tr><td colspan='9'>Error: " . $conn->error . "</td></tr>";
+    } else {
+        echo "<tr><td colspan='9'>No workers found.</td></tr>";
+    }
+}
+
+$conn->close();
+?>
+
+
         </tbody>
     </table>
 
@@ -156,44 +170,12 @@
             form.reset();
         });
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent form submission
+        function removeWorker(worker_id) {
+    if (confirm("Are you sure you want to remove this worker?")) {
+        window.location.href = `delete.php?worker_id=${worker_id}`;
+    }
+}
 
-            const email = document.getElementById('email').value;
-            const dateCreated = document.getElementById('dateCreated').value;
-            const workerName = document.getElementById('workerName').value;
-            const dateOfBirth = document.getElementById('dateOfBirth').value;
-            const contact = document.getElementById('contact').value;
-            const gender = document.getElementById('gender').value;
-            const helmetNo = document.getElementById('helmetNo').value;
-            const location = document.getElementById('location').value;
-
-            // Create a new row
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${email}</td>
-                <td>${dateCreated}</td>
-                <td>${workerName}</td>
-                <td>${dateOfBirth}</td>
-                <td>${contact}</td>
-                <td>${gender}</td>
-                <td>${helmetNo}</td>
-                <td>${location}</td>
-                <td><button onclick="removeWorker(this)">Remove</button></td>
-            `;
-
-            // Add the new row to the table body
-            tableBody.appendChild(row);
-
-            // Clear the form fields and hide the form
-            form.reset();
-            formContainer.classList.remove('show');
-        });
-
-        function removeWorker(button) {
-            const row = button.parentElement.parentElement;
-            tableBody.removeChild(row);
-        }
     </script>
 </body>
 </html>
